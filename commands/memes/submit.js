@@ -18,6 +18,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('submit')
 		.setDescription('Submit a meme for fried knight')
+		.setContexts(0)
 		.addStringOption(option =>
 			option
 				.setName('url')
@@ -35,18 +36,6 @@ module.exports = {
 		const note = interaction.options.getString('note');
 		const guildId = interaction.guildId;
 
-		// Validate URL
-		try {
-			new URL(url);
-		}
-		catch (error) {
-			await interaction.editReply({
-				content: 'Please provide a valid URL!',
-				flags: [MessageFlags.Ephemeral, MessageFlags.Urgent],
-			});
-			return;
-		}
-
 		try {
 			// Load channel mappings
 			const channelMappings = loadChannelMappings();
@@ -55,7 +44,19 @@ module.exports = {
 			if (!channelMappings[guildId]) {
 				await interaction.editReply({
 					content: 'No submission channel has been set for this server yet.',
-					flags: [MessageFlags.Ephemeral, MessageFlags.Urgent],
+					flags: MessageFlags.Ephemeral,
+				});
+				return;
+			}
+
+			// Validate URL
+			try {
+				new URL(url);
+			}
+			catch {
+				await interaction.editReply({
+					content: 'Please provide a valid URL!',
+					flags: MessageFlags.Ephemeral,
 				});
 				return;
 			}
@@ -67,7 +68,7 @@ module.exports = {
 			if (!secretChannel) {
 				await interaction.editReply({
 					content: 'The configured submission channel no longer exists. Please ask an administrator to set a new one.',
-					flags: [MessageFlags.Ephemeral, MessageFlags.Urgent],
+					flags: MessageFlags.Ephemeral,
 				});
 				return;
 			}
@@ -80,7 +81,7 @@ module.exports = {
 				.setTimestamp();
 
 			embed.addFields({ name: 'User', value: `${interaction.user.tag} (${interaction.user.displayName})` });
-			embed.addFields({ name: 'URL', value: url }); // Add the URL to the embed
+			embed.addFields({ name: 'URL', value: url });
 			if (note) {
 				embed.addFields({ name: 'Note', value: note });
 			}
@@ -96,7 +97,7 @@ module.exports = {
 			console.error('Error submitting URL:', error);
 			await interaction.editReply({
 				content: 'Something went wrong when submitting your meme. WILSOOOON FIX IT',
-				flags: [MessageFlags.Ephemeral, MessageFlags.Urgent],
+				flags: MessageFlags.Ephemeral,
 			});
 		}
 	},

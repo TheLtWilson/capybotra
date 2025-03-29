@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 // Create the client
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });

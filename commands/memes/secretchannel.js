@@ -29,6 +29,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('secretchannel')
 		.setDescription('Set the secret channel for meme submissions')
+		.setContexts(0)
 		.addChannelOption(option =>
 			option
 				.setName('channel')
@@ -52,14 +53,14 @@ module.exports = {
 			saveChannelMappings(channelMappings);
 
 			await interaction.reply({
-				content: `Secret channel has been set to ${channel}!`,
+				content: `Secret channel has been set to ${channel}! New submissions will appear in that channel.`,
 				flags: MessageFlags.Ephemeral,
 			});
 		}
 		catch (error) {
 			console.error('Error setting secret channel:', error);
 			await interaction.reply({
-				content: 'There was an error setting the secret channel!',
+				content: 'There was an error setting the secret channel.',
 				flags: MessageFlags.Ephemeral,
 			});
 		}
