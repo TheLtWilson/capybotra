@@ -1,7 +1,15 @@
 {
   "name": "capybotra",
-  "module": "index.js",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "Capybotra is a Discord bot for Capybarha made with Discord.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "register": "node -r dotenv/config ./utils/register-commands.js",
+    "unregister": "node -r dotenv/config ./utils/delete-commands.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "eslint": "^9.22.0"
