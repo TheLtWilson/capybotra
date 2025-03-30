@@ -1,12 +1,19 @@
 {
   "name": "capybotra",
-  "version": "1.0.0",
-  "description": "Capybotra is a Discord bot for Capybarha made with Discord.js",
+  "version": "1.0.1",
+  "description": "Capybotra is a Discord bot for Capybarha made with Discord.js.",
   "main": "index.js",
+  "author": {
+    "name": "Lt. Wilson",
+    "email": "contact@ltwilson.tv",
+    "url": "https://ltwilson.tv"
+  },
   "scripts": {
     "start": "node -r dotenv/config index.js",
     "register": "node -r dotenv/config ./utils/register-commands.js",
+    "register:guild": "node -r dotenv/config ./utils/guild-register-commands.js",
     "unregister": "node -r dotenv/config ./utils/delete-commands.js",
+    "unregister:guild": "node -r dotenv/config ./utils/guild-delete-commands.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
